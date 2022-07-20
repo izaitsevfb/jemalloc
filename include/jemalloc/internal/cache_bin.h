@@ -446,7 +446,7 @@ cache_bin_dalloc_safety_checks(cache_bin_t *bin, void *ptr) {
 	void **cur = bin->stack_head;
 	void **limit = cur + max_scan;
 	for (; cur < limit; cur++) {
-		if (*cur == ptr) {
+		if (unlikely(*cur == ptr)) {
 			safety_check_fail(
 			    "Invalid deallocation detected: double free of "
 			    "pointer %p\n",
