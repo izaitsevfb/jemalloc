@@ -58,9 +58,14 @@ malloc_free_256(void) {
 
 TEST_BEGIN(bench_malloc_free) {
 	time_single_func(
-	    10 * 1000 * 1000, 10 * 1000 * 1000, "malloc_free", malloc_free);
+	    100 * 1000, 100 * 1000, "malloc_free_256", malloc_free_256);
 }
 TEST_END
+//TEST_BEGIN(bench_malloc_free) {
+//	time_single_func(
+//	    10 * 1000 * 1000, 10 * 1000 * 1000, "malloc_free", malloc_free);
+//}
+//TEST_END
 
 int
 main(void) {
