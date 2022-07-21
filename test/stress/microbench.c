@@ -36,9 +36,29 @@ malloc_free(void) {
 	free(p);
 }
 
+static void * ptrs[256];
+
+static void
+malloc_free_256(void) {
+	/* The compiler can optimize away free(malloc(1))! */
+
+	for (size_t i = 0; i < 256; i++) {
+		void *p = malloc(1);
+		if (p == NULL) {
+			test_fail("Unexpected malloc() failure");
+			return;
+		}
+		ptrs[i] = p;
+	}
+
+	for (size_t i = 0; i < 256; i++) {
+		free(ptrs[i]);
+	}
+}
+
 TEST_BEGIN(bench_malloc_free) {
 	time_single_func(
-	    5 * 1000 * 1000, 10 * 1000 * 1000, "malloc_free", malloc_free);
+	    1 * 1000 * 1000, 1 * 1000 * 1000, "malloc_free_256", malloc_free_256);
 }
 TEST_END
 
